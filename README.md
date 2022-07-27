@@ -1,2 +1,2 @@
-# EDA-LAB-06
-Árboles Binarios
+# EDA-LAB-07
+Árboles B

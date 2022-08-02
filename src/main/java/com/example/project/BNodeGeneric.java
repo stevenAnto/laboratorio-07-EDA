@@ -13,8 +13,10 @@ public class BNodeGeneric<E extends Comparable<E>>{
     this.minDeg = deg;
     this.isLeaf =isLeaf;
     //Se generan Vector del tamano correspondiente
-    this.keys = new Vector<E>(2*this.minDeg-1);
-    this.children = new Vector<BNodeGeneric<E>>(2*this.minDeg);
+    this.keys = new Vector<E>(2*this.minDeg-1,1);
+    System.out.println(keys);
+    this.children = new Vector<BNodeGeneric<E>>(2*this.minDeg,1);
+    System.out.println(children);
     this.num = 0;
 
   }
@@ -72,6 +74,9 @@ public class BNodeGeneric<E extends Comparable<E>>{
       children.get(i).remove(key);
     }
   }
+  public void merge(int i){
+
+  }
   public E getSucesor(int i){
     BNodeGeneric<E>  current = children.get(i+1);
     while(!current.isLeaf)
@@ -119,11 +124,11 @@ public class BNodeGeneric<E extends Comparable<E>>{
 	if(keys.get(i+1).compareTo(key)<0)
 	  i++;
       }
-      childre.get(i+1).insertNotFull(key);
+      children.get(i+1).insertNotFull(key);
     }
   }
-  public void splitChild(int i, BNodeGenernic<E> y){
-    BNodeGeneric<E> z= new BNodeGeneric(y.minDeg,y.isLeaf);
+  public void splitChild(int i, BNodeGeneric<E> y){
+    BNodeGeneric<E> z= new BNodeGeneric<E>(y.minDeg,y.isLeaf);
     z.num = minDeg-1;
     //pasamos las claves
     for(int j=0; j < minDeg-1;j++){
@@ -145,5 +150,16 @@ public class BNodeGeneric<E extends Comparable<E>>{
       keys.set(j+1,keys.get(j));
     keys.set(i,y.keys.get(minDeg-1));
     num++;
+  }
+  public void traverse(){
+    int i;
+    for(i=0;i<num;i++){
+      if(!isLeaf)
+	children.get(i).traverse();
+      System.out.printf(" %d",keys.get(i));
+    }
+    if(!isLeaf){
+      children.get(i).traverse();
+    }
   }
 }

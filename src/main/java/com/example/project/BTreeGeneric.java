@@ -1,6 +1,13 @@
-package com.example.project;
+//package com.example.project;
+public class BTreeGeneric<E extends Comparable<E>> {
+  BNodeGeneric<E> root;
+  int minDeg;
 
-public class BTreeGeneric<E extends Comparable<? super E>> {
+  public BTreeGeneric(int deg){
+    this.root = null;
+    this.minDeg = deg;
+  }
+  
 
     public boolean add(E value) {
         //TODO implement here!
@@ -17,8 +24,10 @@ public class BTreeGeneric<E extends Comparable<? super E>> {
     }
 
     public boolean search(E value) {
-        //TODO implement here!
-        return false;
+      return searchR(value)!=null;
+    }
+    private BNodeGeneric<E> searchR(E value) {
+      return root.search(value);
     }
 
     public int size() {

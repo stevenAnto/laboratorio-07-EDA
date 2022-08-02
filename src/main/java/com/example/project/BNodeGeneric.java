@@ -10,14 +10,19 @@ public class BNodeGeneric<E extends Comparable<E>>{
 
   //Constructor , parametro deg es el minimo, y en funcion de este se calcula el maximo
   public BNodeGeneric(int deg, boolean isLeaf){
+    System.out.println("BNodeGeneric1");
     this.minDeg = deg;
     this.isLeaf =isLeaf;
     //Se generan Vector del tamano correspondiente
-    this.keys = new Vector<E>(2*this.minDeg-1,1);
-    System.out.println(keys);
-    this.children = new Vector<BNodeGeneric<E>>(2*this.minDeg,1);
-    System.out.println(children);
+    this.keys = new Vector<E>(2*this.minDeg-1);
+    this.children = new Vector<BNodeGeneric<E>>(2*this.minDeg);
     this.num = 0;
+    for(int i=0;i< (2*this.minDeg-1);i++)
+      this.keys.add(null);
+    for(int i=0;i< (2*this.minDeg);i++)
+      this.children.add(null);
+    //System.out.println(keys);
+    //System.out.println(children);
 
   }
   //Devuelve el indice de la llave buscada o el siguiente mayor
@@ -154,9 +159,10 @@ public class BNodeGeneric<E extends Comparable<E>>{
   public void traverse(){
     int i;
     for(i=0;i<num;i++){
-      if(!isLeaf)
+      if(!isLeaf){
 	children.get(i).traverse();
-      System.out.printf(" %d",keys.get(i));
+      }
+      System.out.print(keys.get(i));
     }
     if(!isLeaf){
       children.get(i).traverse();

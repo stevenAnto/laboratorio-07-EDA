@@ -13,12 +13,15 @@ public class BTreeGeneric<E extends Comparable<E>> {
         return false;
     }
     public void insert(E key){
+      System.out.println("insert1");
       if(root == null){
+	System.out.println("inset1.1");
 	root = new BNodeGeneric<E>(minDeg,true);//true porque es una hoja
 	root.keys.set(0,key);
 	root.num = 1;
       }
       else{
+	System.out.println("insert1.2");
 	//la raiz esta llena el arbol crecera
 	if(root.num==2*minDeg-1){
 	  BNodeGeneric<E> s = new BNodeGeneric<E>(minDeg,false);
@@ -37,9 +40,11 @@ public class BTreeGeneric<E extends Comparable<E>> {
       }
     }
     public void traverse(){
+      System.out.println("se imprime arbol");
       if(root !=null){
 	root.traverse();
       }
+      System.out.println();
     }
 
     public E remove(E value) {
@@ -65,11 +70,13 @@ public class BTreeGeneric<E extends Comparable<E>> {
     public static void main(String[] args){
       BTreeGeneric<Integer> t = new BTreeGeneric<Integer>(2);
       t.insert(1);
+      t.traverse();
       t.insert(2);
       t.insert(3);
       t.traverse();
       t.insert(4);
       t.insert(5);
+      t.traverse();
       t.insert(6);
       t.insert(7);
       t.insert(8);
@@ -84,6 +91,6 @@ public class BTreeGeneric<E extends Comparable<E>> {
       t.insert(17);
       t.insert(18);
       t.insert(19);
-      t.insert(20);
+      t.traverse();
     }
 }

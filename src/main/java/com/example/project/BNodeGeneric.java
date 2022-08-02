@@ -80,6 +80,10 @@ public class BNodeGeneric<E extends Comparable<E>>{
   }
   public void fill(int i){
   }
+
+
+
+  //Busco recursivamente en el nodo, con el while  me ubico en el indice por el cual bajar, o compararlo y con eso devuevl el nodo, caso contrario si es Leaf entonces no se encontro y se devuelve un null
   public BNodeGeneric<E> search(E key){
     int i=0;
     while(i< num && key.compareTo(keys.get(i))>0){
@@ -90,5 +94,56 @@ public class BNodeGeneric<E extends Comparable<E>>{
     if(isLeaf)
       return null;
     return children.get(i).search(key);
+  }
+  public void insertNotFull(E key){
+    int i= num-1;
+    //Si ya estoy en hoja, procedo a insertar nomas
+    //de adelante hacia atras voy desplazando
+    if(isLeaf){
+      while(i >=0 && keys.get(i).compareTo(key)>0){
+	keys.set(i+1,keys.get(i));//desplazo
+	i--;
+      }
+      //coloco la nueva clave
+      keys.set(i+1,key);
+      num++;
+    }
+    //si no es hoja
+    else{
+      //Encuentro el nodo en el cual sera insertado, a traves de de recorre el indice
+      while(i>=0 && keys.get(i).compareTo(key)>0)
+	i--;
+      //Verificamos con anterioridad si se va a dividir dicho nodo
+      if(children.get(i+1).num == 2*minDeg -1){
+	splitChild(i+1,children.get(i+1));
+	if(keys.get(i+1).compareTo(key)<0)
+	  i++;
+      }
+      childre.get(i+1).insertNotFull(key);
+    }
+  }
+  public void splitChild(int i, BNodeGenernic<E> y){
+    BNodeGeneric<E> z= new BNodeGeneric(y.minDeg,y.isLeaf);
+    z.num = minDeg-1;
+    //pasamos las claves
+    for(int j=0; j < minDeg-1;j++){
+      z.keys.set(j,y.keys.get(j+minDeg));
+    }
+    //pasamos los hijos
+    if(!y.isLeaf){
+      for(int j = 0; j < minDeg; j++){
+	z.children.set(j,y.children.get(j+minDeg));
+      }
+    }
+    y.num =minDeg-1;
+    //movemos los hijos, y referencias al nuevo nodo q se creo
+    for(int j=num ; j>=i+1;j--)
+      children.set(j+1,children.get(j));
+    children.set(i+1,z);
+
+    for(int j= num-1;j>=i;j--)
+      keys.set(j+1,keys.get(j));
+    keys.set(i,y.keys.get(minDeg-1));
+    num++;
   }
 }

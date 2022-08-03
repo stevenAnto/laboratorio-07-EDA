@@ -10,7 +10,7 @@ public class BNodeGeneric<E extends Comparable<E>>{
 
   //Constructor , parametro deg es el minimo, y en funcion de este se calcula el maximo
   public BNodeGeneric(int deg, boolean isLeaf){
-    System.out.println("BNodeGeneric1");
+    //System.out.println("BNodeGeneric1");
     this.minDeg = deg;
     this.isLeaf =isLeaf;
     //Se generan Vector del tamano correspondiente
@@ -156,7 +156,7 @@ public class BNodeGeneric<E extends Comparable<E>>{
   public BNodeGeneric<E> search(E key){
     int i=0;
     while(i< num && keys.get(i).compareTo(key)<0){
-      System.out.println("entroBNodeWhie");
+      //System.out.println("entroBNodeWhie");
       i++;
     }
     System.out.println("salio:" +i);

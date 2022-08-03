@@ -13,7 +13,7 @@ public class BTreeGeneric<E extends Comparable<E>> {
         return false;
     }
     public void insert(E key){
-      System.out.println("insert1");
+      System.out.println("se insertara "+key);
       if(root == null){
 	System.out.println("inset1.1");
 	root = new BNodeGeneric<E>(minDeg,true);//true porque es una hoja
@@ -34,10 +34,10 @@ public class BTreeGeneric<E extends Comparable<E>> {
 	  root = s;
 
 	}
-	else{
+	else
 	  root.insertNotFull(key);
-	}
       }
+      System.out.println("se termino de insertar "+key+"\n");
     }
     public void traverse(){
       System.out.println("se imprime arbol");
@@ -47,26 +47,37 @@ public class BTreeGeneric<E extends Comparable<E>> {
       System.out.println();
     }
 
-    public E remove(E value) {
-        //TODO implement here!
-        return null;
+    public void remove(E value) {
+      System.out.println("Se eliminara a :"+value);
+      if(root == null){
+	System.out.println("The tree is empty");
+	return;
+      }
+      root.remove(value);
+      //si la raiz se queda sin claves se procede a nombra a su hijo como nueva raizo
+      if(root.num==0){
+	if(root.isLeaf)
+	  root = null;
+	else
+	  root = root.children.get(0);
+      }
+
     }
 
     public void clear() {
         //TODO implement here!
     }
 
-    public boolean search(E value) {
+    /*public boolean search(E value) {
       return searchR(value)!=null;
     }
     private BNodeGeneric<E> searchR(E value) {
       return root.search(value);
+    }*/
+    public BNodeGeneric<E> search(E key) {
+      return root == null ? null : root.search(key);
     }
 
-    public int size() {
-        //TODO implement here!
-        return 0;
-    }
     public static void main(String[] args){
       BTreeGeneric<Integer> t = new BTreeGeneric<Integer>(2);
       t.insert(1);
@@ -91,6 +102,13 @@ public class BTreeGeneric<E extends Comparable<E>> {
       t.insert(17);
       t.insert(18);
       t.insert(19);
+      t.traverse();
+      t.remove(17);
+      t.traverse();
+      System.out.println("se busca a 18 :"+t.search(18));
+      t.search(50);
+      System.out.println("se busca a 50 :"+t.search(50));
+      t.remove(18);
       t.traverse();
     }
 }
